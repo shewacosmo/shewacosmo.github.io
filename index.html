@@ -3,28 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Shewa Cosmo and Fashion Gallery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #444;
+        }
+        nav a {
+            color: white;
+            padding: 15px 25px;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        nav a:hover {
+            background-color: #575757;
+        }
+        .tab-content {
+            display: none;
+            padding: 20px;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+        .gallery img {
+            width: 200px;
+            height: 300px;
+            object-fit: cover;
+            margin: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+        }
+        .gallery img:hover {
+            transform: scale(1.1);
+        }
+        .upload-section {
+            text-align: center;
+            margin: 20px;
+        }
+        .upload-section input[type="file"] {
+            margin-top: 10px;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>Welcome to My Portfolio</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About Me</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
+        <h1>Shewa Cosmo and Fashion Gallery</h1>
     </header>
-    <main>
-        <section>
-            <h2>Hello, World!</h2>
-            <p>This is my personal portfolio website. Explore to learn more about me.</p>
-        </section>
-    </main>
+    <nav>
+        <a href="#" data-tab="home">Home</a>
+        <a href="#" data-tab="gallery">Gallery</a>
+        <a href="#" data-tab="about">About</a>
+    </nav>
+
+    <!-- Home Tab -->
+    <div id="home" class="tab-content active">
+        <h2>Welcome to Shewa Cosmo and Fashion</h2>
+        <p>Explore the latest trends in fashion and beauty.</p>
+    </div>
+
+    <!-- Gallery Tab -->
+    <div id="gallery" class="tab-content">
+        <h2>Photo Gallery</h2>
+        <div class="upload-section">
+            <h3>Upload Your Fashion Photos</h3>
+            <input type="file" id="imageUpload" accept="image/*" multiple>
+        </div>
+        <div class="gallery" id="gallery-images">
+            <img src="https://via.placeholder.com/200x300" alt="Fashion Image 1">
+            <img src="https://via.placeholder.com/200x300" alt="Fashion Image 2">
+            <img src="https://via.placeholder.com/200x300" alt="Fashion Image 3">
+        </div>
+    </div>
+
+    <!-- About Tab -->
+    <div id="about" class="tab-content">
+        <h2>About Us</h2>
+        <p>we are dedicated to full fill our customer demand please contact me 0923864110.</p>
+    </div>
+
     <footer>
-        <p>&copy; 2023 My Portfolio</p>
+        &copy; 2024 Shewa Cosmo and Fashion Gallery
     </footer>
+
+    <script>
+        // Tab functionality
+        const tabs = document.querySelectorAll('nav a');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetTab = this.getAttribute('data-tab');
+
+                // Hide all tab contents
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                // Show the selected tab content
+                document.getElementById(targetTab).classList.add('active');
+
+                // Update active tab style
+                tabs.forEach(t => t.style.backgroundColor = '');
+                this.style.backgroundColor = '#575757';
+            });
+        });
+
+        // Image upload functionality
+        const imageUpload = document.getElementById('imageUpload');
+        const gallery = document.getElementById('gallery-images');
+
+        imageUpload.addEventListener('change', function(event) {
+            const files = event.target.files;
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.alt = file.name;
+                    gallery.appendChild(img);
+                }
+
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
 </body>
 </html>
